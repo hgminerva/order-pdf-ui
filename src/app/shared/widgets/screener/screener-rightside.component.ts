@@ -10,7 +10,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PcrDataModel } from '../../../models/screener/pcr-data-model';
 import { StockChartService } from '../../../services/magenta/stock-chart.service';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ScreenerDetailComponent } from './../screener-detail/screener-detail.component';
+import { ScreenerImportComponent } from './../screener-import/screener-import.component';
+import { ScreenerPdfComponent } from './../screener-pdf/screener-pdf.component';
 
 export interface PcrResult {
   value: string;
@@ -53,13 +56,16 @@ export class ScreenerRightsideComponent implements OnInit {
     public datepipe: DatePipe,
     private router: Router,
     private _dialogRef: MatDialogRef<ScreenerRightsideComponent>,
-    @Inject(MAT_DIALOG_DATA) private _dialogInputData: any
+    @Inject(MAT_DIALOG_DATA) private _dialogInputData: any,
+    private screenerDetailDialog: MatDialog,
+    private screenerImportDialog: MatDialog,
+    private screenerPdfDialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.getPcrData();
 
-    if(this._dialogInputData != null) {
+    if (this._dialogInputData != null) {
       this._isDialog = this._dialogInputData.isDialog;
       this._dialogSourceComponent = this._dialogInputData.sourceComponent;
     }
@@ -110,43 +116,86 @@ export class ScreenerRightsideComponent implements OnInit {
 
     this.getPcrData();
   }
+
   public buttonExportCSV(): void {
-    // let exportData = [];
+    let exportData = [];
 
-    // exportData.push({
-    //   Symbol: "Symbol",
-    //   Description: "Description",
-    //   Exchange: "Exchange",
-    //   Price: "Price",
-    //   Vol: "Vol (M)"
-    // });
+    exportData.push({
+      order_number: "Order Number",
+      customer_name: "Customer Name",
+      email: "Emal",
+      customer_address: "Address",
+      product_code: "Product Code",
+      result: "Result"
+    });
 
-    // if (this.screenerData.length > 0) {
-    //   for (let i = 0; i < this.screenerData.length; i++) {
-    //     exportData.push({
-    //       Symbol: this.screenerData[i].Symbol,
-    //       Description: this.screenerData[i].Description,
-    //       Exchange: this.screenerData[i].Exchange,
-    //       Price: this.screenerData[i].Price,
-    //       Vol: this.screenerData[i].Vol
-    //     });
-    //   }
-    // }
+    if (this.pcrData.length > 0) {
+      for (let i = 0; i < this.pcrData.length; i++) {
+        exportData.push({
+          order_number: this.pcrData[i].order_number,
+          customer_name: this.pcrData[i].customer_name,
+          email: this.pcrData[i].email,
+          customer_address: this.pcrData[i].customer_address,
+          product_code: this.pcrData[i].product_code,
+          result: this.pcrData[i].result
+        });
+      }
+    }
 
-    // let newDate: Date = new Date();
-    // let exportDate: string = this.datepipe.transform(newDate, 'yyyyMMddHHmmss');
+    let newDate: Date = new Date();
+    let exportDate: string = this.datepipe.transform(newDate, 'yyyyMMddHHmmss');
 
-    // new ngxCsv(exportData, "Screener_Rightside_" + exportDate);
+    new ngxCsv(exportData, "PCR_" + exportDate);
   }
-  public buttonOpenChart(symbol: String): void {
-/*     this.router.navigate(['/chart', symbol]);
-    if(this._isDialog == true) {
-      this._dialogRef.close({ data: symbol });
-    } else {
-      this.router.navigate(['/chart', symbol]);
-    } */
+
+  public buttonImportCSV(): void {
+    const openDialog = this.screenerImportDialog.open(ScreenerImportComponent, {
+      width: '500px',
+      data: {
+
+      },
+      disableClose: true
+    });
+
+    openDialog.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.getPcrData();
+      }
+    });
   }
+
+  public buttonOpenChart(data: any): void {
+    const openDialog = this.screenerDetailDialog.open(ScreenerDetailComponent, {
+      width: '500px',
+      data: {
+        currentRow: data
+      },
+      disableClose: true
+    });
+
+    openDialog.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.getPcrData();
+      }
+    });
+  }
+
+  public buttonOpenChartPDF(data: any): void {
+    const openDialog = this.screenerPdfDialog.open(ScreenerPdfComponent, {
+      width: '1200px',
+      data: {
+
+      },
+      disableClose: true
+    });
+
+    openDialog.afterClosed().subscribe(result => {
+      if (result != null) {
+      }
+    });
+  }
+
   public buttonCloseDialog(): void {
-/*     this._dialogRef.close({ data: "" }); */
+    /*     this._dialogRef.close({ data: "" }); */
   }
 }

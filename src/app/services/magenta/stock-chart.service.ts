@@ -78,28 +78,93 @@ export class StockChartService {
 
   public getPcrData(): Observable<PcrDataModel[]> {
     const pcrDataObservable = new Observable<PcrDataModel[]>(observer => {
+
       let pcrDataModelArray: PcrDataModel[] = [];
       let options: any = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-      this.http.get("http://127.0.0.1:8000/api/orders", options).subscribe(
-        results => {
-          if (results["data"].length > 0) {
-            for (var i = 0; i < results["data"].length; i++) {
-              pcrDataModelArray.push({
-                id: results["data"][i].id,
-                order_number: results["data"][i].order_number,
-                customer_name: results["data"][i].customer_name,
-                email: results["data"][i].email,
-                customer_address: results["data"][i].customer_address,
-                product_code: results["data"][i].product_code,
-                result: results["data"][i].result
-              });
-            }
-            observer.next(pcrDataModelArray);
-          }
-        }
-      );
+
+      // this.http.get("http://127.0.0.1:8000/api/orders", options).subscribe(
+      //   results => {
+      //     if (results["data"].length > 0) {
+      //       for (var i = 0; i < results["data"].length; i++) {
+      //         pcrDataModelArray.push({
+      //           id: results["data"][i].id,
+      //           order_number: results["data"][i].order_number,
+      //           customer_name: results["data"][i].customer_name,
+      //           email: results["data"][i].email,
+      //           customer_address: results["data"][i].customer_address,
+      //           product_code: results["data"][i].product_code,
+      //           result: results["data"][i].result
+      //         });
+      //       }
+      //       observer.next(pcrDataModelArray);
+      //     }
+      //   }
+      // );
+
+      pcrDataModelArray.push({
+        id: 0,
+        order_number: "0000000001",
+        customer_name: "Harold Glenn Minerva",
+        email: "hgminerva@gmail.com",
+        customer_address: "Minglanilla Cebu City",
+        product_code: "PRC-00001",
+        result: "Negative"
+      });
+
+      pcrDataModelArray.push({
+        id: 0,
+        order_number: "0000000002",
+        customer_name: "Noah Oliver Rigonan",
+        email: "oliverrigonan@gmail.com",
+        customer_address: "Sambag Uno, Cebu City",
+        product_code: "PRC-00005",
+        result: "Negative"
+      });
+
+      observer.next(pcrDataModelArray);
     });
     return pcrDataObservable;
+  }
+
+  public updatePcrData(objData: PcrDataModel): any {
+    const o = new Observable(observer => {
+      let options: any = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+      this.http.put<any>("http://127.0.0.1:8000/api/orders", JSON.stringify(objData), options).subscribe(data => {
+        observer.next(data)
+      });
+    });
+
+    return o;
+  }
+
+  public importPcrData(objDatas: string): any {
+    const o = new Observable(observer => {
+
+      let JSONParsed = JSON.parse(objDatas);
+      let JSONData = [];
+
+      if (JSONParsed["length"] > 0) {
+        for (let i = 0; i <= JSONParsed["length"] - 1; i++) {
+          JSONData.push({
+            order_number: JSONParsed[i]["order_number"],
+            customer_name: JSONParsed[i]["customer_name"],
+            email: JSONParsed[i]["email"],
+            customer_address: JSONParsed[i]["customer_address"],
+            product_code: JSONParsed[i]["product_code"],
+            result: JSONParsed[i]["result"]
+          });
+        }
+      }
+
+      let options: any = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+      this.http.put<any>("http://127.0.0.1:8000/api/orders", JSON.stringify(JSONData), options).subscribe(data => {
+        observer.next(data)
+      });
+    });
+
+    return o;
   }
 
 

@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>
+    Import Data
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <div *ngIf="_showSpinner" id="spinnerWrap">
+        <div class="spinner">
+            <mat-progress-spinner class="default-spinner" mode="indeterminate" [strokeWidth]="2" [diameter]="192">
+            </mat-progress-spinner>
+        </div>
+    </div>
+
+    <div [hidden]="isPcrSpinnerContentHidden">
+        <input type="file" (change)="onFileSelect($event.target)" name="myfile" style="width: 100%;">
+    </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" (click)="buttonImportPCRClick()" [disabled]="isButtonPCRDisabled">
+        Import
+    </button>
+    <button mat-flat-button color="warn" (click)="buttonClosePCRClick()" [disabled]="isButtonPCRDisabled">
+        Close
+    </button>
+</mat-dialog-actions>

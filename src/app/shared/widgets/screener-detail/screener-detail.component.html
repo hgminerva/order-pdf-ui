@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>
+    PCR Detail
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <div *ngIf="_showSpinner" id="spinnerWrap">
+        <div class="spinner">
+            <mat-progress-spinner class="default-spinner" mode="indeterminate" [strokeWidth]="2" [diameter]="192">
+            </mat-progress-spinner>
+        </div>
+    </div>
+
+    <div [hidden]="isPcrSpinnerContentHidden">
+        <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px; margin-bottom: 10px;">
+            <div fxFlex="100">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Order Number</mat-label>
+                            <input matInput [(ngModel)]="pcrDataModel.order_number"
+                                [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Customer</mat-label>
+                            <input matInput [(ngModel)]="pcrDataModel.customer_name"
+                                [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Email</mat-label>
+                            <input matInput [(ngModel)]="pcrDataModel.email" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Address</mat-label>
+                            <textarea matInput style="min-height: 73px;" [(ngModel)]="pcrDataModel.customer_address"
+                                [ngModelOptions]="{standalone: true}"></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Product Code</mat-label>
+                            <input matInput [(ngModel)]="pcrDataModel.product_code"
+                                [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Result</mat-label>
+                            <textarea matInput style="min-height: 73px;" [(ngModel)]="pcrDataModel.result"
+                                [ngModelOptions]="{standalone: true}"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" (click)="buttonSavePCRClick()" [disabled]="isButtonPCRDisabled">
+        Save
+    </button>
+    <button mat-flat-button color="warn" (click)="buttonClosePCRClick()" [disabled]="isButtonPCRDisabled">
+        Close
+    </button>
+</mat-dialog-actions>

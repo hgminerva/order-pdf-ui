@@ -1,6 +1,6 @@
 <br />
 <div fxLayout="row" fxLayout.xs="column">
-<!--     <div fxFlex="15" style="padding: 5px;">
+    <!--     <div fxFlex="15" style="padding: 5px;">
         <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Trade Action</mat-label>
             <mat-select [(value)]="tradeActionSelectedValue">
@@ -40,35 +40,32 @@
     </div>
     <div fxFlex="30" style="padding: 5px;">
         <button mat-flat-button style="background-color: #7fba00; color: white; margin-top: 10px;"
-                (click)="buttonGetResults()"
-                [disabled]="isRefreshButtonDisabled">
+            (click)="buttonGetResults()" [disabled]="isRefreshButtonDisabled">
             Get Result
         </button>
         &nbsp;
         <button mat-flat-button style="background-color: #7fba00; color: white; margin-top: 10px;"
-                (click)="buttonExportCSV()"
-                [disabled]="isRefreshButtonDisabled">
-            Download
+            (click)="buttonExportCSV()" [disabled]="isRefreshButtonDisabled">
+            Export
+        </button>
+        &nbsp;
+        <button mat-flat-button style="background-color: #7fba00; color: white; margin-top: 10px;"
+            (click)="buttonImportCSV()" [disabled]="isRefreshButtonDisabled">
+            Import
         </button>
         &nbsp;
         <button mat-flat-button style="background-color: #EC1E27; color: white; margin-top: 10px;"
-                (click)="buttonCloseDialog()"
-                [disabled]="isRefreshButtonDisabled"
-                *ngIf="_isDialog">
+            (click)="buttonCloseDialog()" [disabled]="isRefreshButtonDisabled" *ngIf="_isDialog">
             Close
         </button>
     </div>
 </div>
 
 <div *ngIf="_showSpinner" id="spinnerWrap">
-  <div class="spinner">
-    <mat-progress-spinner
-      class="default-spinner"
-      mode="indeterminate"
-      [strokeWidth]="2"
-      [diameter]="192">
-    </mat-progress-spinner>
-  </div>
+    <div class="spinner">
+        <mat-progress-spinner class="default-spinner" mode="indeterminate" [strokeWidth]="2" [diameter]="192">
+        </mat-progress-spinner>
+    </div>
 </div>
 
 <div [hidden]="isPcrSpinnerContentHidden">
@@ -80,8 +77,7 @@
                     <mat-header-cell fxFlex="70px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                     <mat-cell fxFlex="70px" *matCellDef="let row">
                         <button mat-mini-fab style="background-color: white;"
-                            aria-label="Example icon button with a delete icon"
-                            (click)="buttonOpenChart(row.Symbol)">
+                            aria-label="Example icon button with a delete icon" (click)="buttonOpenChart(row)">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </mat-cell>
@@ -91,8 +87,7 @@
                     <mat-header-cell fxFlex="50px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                     <mat-cell fxFlex="50px" *matCellDef="let row">
                         <button mat-mini-fab style="background-color: white;"
-                            aria-label="Example icon button with a delete icon"
-                            (click)="buttonOpenChart(row.Symbol)">
+                            aria-label="Example icon button with a delete icon" (click)="buttonOpenChartPDF(row)">
                             <mat-icon>print</mat-icon>
                         </button>
                     </mat-cell>
@@ -102,8 +97,7 @@
                     <mat-header-cell fxFlex="50px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                     <mat-cell fxFlex="50px" *matCellDef="let row">
                         <button mat-mini-fab style="background-color: white;"
-                            aria-label="Example icon button with a delete icon"
-                            (click)="buttonOpenChart(row.Symbol)">
+                            aria-label="Example icon button with a delete icon" (click)="buttonOpenChart(row)">
                             <mat-icon>email</mat-icon>
                         </button>
                     </mat-cell>

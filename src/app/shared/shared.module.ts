@@ -39,6 +39,9 @@ import { ScreenerRightsideComponent } from './widgets/screener/screener-rightsid
 // Tools
 import { ProgressLoaderComponent } from './tools/progress-loader/progress-loader.component';
 import { DialogPromptComponent } from './tools/dialog-prompt/dialog-prompt.component';
+import { ScreenerDetailComponent } from './widgets/screener-detail/screener-detail.component';
+import { ScreenerPdfComponent } from './widgets/screener-pdf/screener-pdf.component';
+import { ScreenerImportComponent } from './widgets/screener-import/screener-import.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,10 @@ import { DialogPromptComponent } from './tools/dialog-prompt/dialog-prompt.compo
     ScreenerRightsideComponent,
     ChartDailyComponent,
     ProgressLoaderComponent,
-    DialogPromptComponent
+    DialogPromptComponent,
+    ScreenerDetailComponent,
+    ScreenerPdfComponent,
+    ScreenerImportComponent
   ],
   imports: [
     CommonModule,

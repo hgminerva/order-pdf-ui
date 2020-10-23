@@ -42,12 +42,12 @@ import { ToastrModule } from 'ngx-toastr';
     MatIconModule,
     MatSnackBarModule,
     FlexLayoutModule,
-    BrowserAnimationsModule, 
+    BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: false,
-    }) 
+    })
   ],
   providers: [AppGuard],
   bootstrap: [AppComponent]
