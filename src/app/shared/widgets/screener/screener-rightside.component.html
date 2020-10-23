@@ -1,0 +1,131 @@
+<br />
+<div fxLayout="row" fxLayout.xs="column">
+<!--     <div fxFlex="15" style="padding: 5px;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Trade Action</mat-label>
+            <mat-select [(value)]="tradeActionSelectedValue">
+                <mat-option *ngFor="let tradeActionInterface of tradeActionsInterface"
+                    [value]="tradeActionInterface.value">
+                    {{tradeActionInterface.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex="15" style="padding: 5px;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Candle Type</mat-label>
+            <mat-select [(value)]="candleTypeSelectedValue">
+                <mat-option *ngFor="let candleTypeInterface of candleTypesInterface"
+                    [value]="candleTypeInterface.value">
+                    {{candleTypeInterface.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex="15" style="padding: 5px;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Trend</mat-label>
+            <mat-select [(value)]="trendSelectedValue">
+                <mat-option *ngFor="let trendInterface of trendsInterface" [value]="trendInterface.value">
+                    {{trendInterface.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div> -->
+    <div fxFlex="25" style="padding: 5px;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="pcrFilter($event)" placeholder="Filter" #filterPcr />
+        </mat-form-field>
+    </div>
+    <div fxFlex="30" style="padding: 5px;">
+        <button mat-flat-button style="background-color: #7fba00; color: white; margin-top: 10px;"
+                (click)="buttonGetResults()"
+                [disabled]="isRefreshButtonDisabled">
+            Get Result
+        </button>
+        &nbsp;
+        <button mat-flat-button style="background-color: #7fba00; color: white; margin-top: 10px;"
+                (click)="buttonExportCSV()"
+                [disabled]="isRefreshButtonDisabled">
+            Download
+        </button>
+        &nbsp;
+        <button mat-flat-button style="background-color: #EC1E27; color: white; margin-top: 10px;"
+                (click)="buttonCloseDialog()"
+                [disabled]="isRefreshButtonDisabled"
+                *ngIf="_isDialog">
+            Close
+        </button>
+    </div>
+</div>
+
+<div *ngIf="_showSpinner" id="spinnerWrap">
+  <div class="spinner">
+    <mat-progress-spinner
+      class="default-spinner"
+      mode="indeterminate"
+      [strokeWidth]="2"
+      [diameter]="192">
+    </mat-progress-spinner>
+  </div>
+</div>
+
+<div [hidden]="isPcrSpinnerContentHidden">
+    <div fxLayout="row" fxLayout.xs="column">
+        <div fxFlex="100" style="padding: 5px;">
+            <mat-table [dataSource]="pcrDataSource" #pcrSort="matSort" matSort style="overflow-x: scroll;">
+
+                <ng-container matColumnDef="button_search">
+                    <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                    <mat-cell fxFlex="100px" *matCellDef="let row">
+                        <button mat-mini-fab style="background-color: white;"
+                            aria-label="Example icon button with a delete icon"
+                            (click)="buttonOpenChart(row.Symbol)">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="order_number">
+                    <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> Order No. </mat-header-cell>
+                    <mat-cell fxFlex="100px" *matCellDef="let row"> {{row.order_number}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="customer_name">
+                    <mat-header-cell fxFlex="350px" *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                    <mat-cell fxFlex="350px" *matCellDef="let row"> {{row.customer_name}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                    <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.email}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="customer_address">
+                    <mat-header-cell fxFlex="350px" *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
+                    <mat-cell fxFlex="350px" *matCellDef="let row"> {{row.customer_address}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="product_code">
+                    <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> Product </mat-header-cell>
+                    <mat-cell fxFlex="100px" *matCellDef="let row"> {{row.product_code}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="result">
+                    <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Result </mat-header-cell>
+                    <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.result}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="pcrDisplayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: pcrDisplayedColumns;"></mat-row>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="6">No data matching the filter "{{filterPcr.value}}"</td>
+                </tr>
+            </mat-table>
+
+            <mat-paginator #pcrPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

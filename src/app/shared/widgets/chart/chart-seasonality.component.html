@@ -1,0 +1,135 @@
+<div id="chartSeasonalityWrapper"
+     style="height: 100%; display: block;">
+
+  <div *ngIf="_showSpinner" id="spinnerWrap">
+    <div class="spinner">
+      <mat-progress-spinner
+        class="default-spinner"
+        mode="indeterminate"
+        [strokeWidth]="2"
+        [diameter]="192">
+      </mat-progress-spinner>
+    </div>
+  </div>
+
+  <mat-toolbar class="mat-toolbar-widget">
+    <button mat-button (click)="toggleSidebar()">&#9776;</button>
+    <span>Seasonality Chart:</span>
+    <span>&nbsp;&nbsp;</span>
+    <span #chartLabel></span>
+    <span>&nbsp;&nbsp;</span>
+    <span #chartCursorData></span>
+  </mat-toolbar>
+
+  <mat-drawer-container class="mat-drawer-container-widget">
+    <mat-drawer mode="side" [opened]="_sideBarOpen" class="mat-drawer-widget">
+      <!-- Sidebar header options -->
+      <div style="width: 100%;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="100%"><p class="my-chart-font">OPTIONS</p></div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- MSI -->
+      <div style="width: 100%;" fxLayout="row wrap" fxLayoutGap="1px">
+        <div fxFlex="30px"><input type="checkbox"></div>
+        <div fxFlex="140px"><p class="my-chart-font">MSI</p></div>
+      </div>
+      <div style="width:100%; margin-top:-12px; margin-bottom: 5px;" fxLayout="row wrap" fxLayoutGap="1px">
+        <div class="my-chart-font" fxFlex="30px" style="text-align: center;" >
+          &#10687;
+        </div>
+        <div class="my-chart-font" fxFlex="70px">
+          Condition:
+        </div>
+        <div class="my-chart-font" fxFlex="70px" style="text-align: right;">
+          <font color="#FFFFFF">{{_msiCondition}}</font>
+        </div>
+        <div class="my-chart-font" fxFlex="30px" style="text-align: center;" >
+          &#10687;
+        </div>
+        <div class="my-chart-font" fxFlex="70px">
+          Trade Action:
+        </div>
+        <div class="my-chart-font" fxFlex="70px" style="text-align: right;">
+          <font color="#FFFFFF">{{_msiTradeAction}}</font>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- 10-Year Seasonality Series with yearly data and total -->
+      <div style="width: 100%;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="30px"><input (change)="toggleSeason10($event)" [checked]="_showSeason10" type="checkbox"/></div>
+        <div fxFlex="150px"><p class="my-chart-font">10-Year Seasonality  <font color="#FFD700">&#x2587;</font></p></div>
+      </div>
+      <div style="width: 100%;margin-top:-12px;margin-bottom:10px;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="30px" style="text-align: center;" class="my-chart-font">
+          &#10687;
+        </div>
+        <div fxFlex="140px">
+          <mat-select required class="my-chart-font" [(value)]="_scannerDataValue">
+            <mat-option
+              *ngFor="let d of _scannerData; let i = index"
+              class="my-chart-font"
+              value="{{d.index}}">
+                {{d.value}}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div *ngFor="let y of _seasonYear; let i = index"
+          style="width: 100%; margin-top:-12px;margin-bottom:-12px;"
+          fxLayout="row wrap"
+          fxLayoutGap="1px">
+        <div fxFlex="30px" style="text-align: center;">
+          <input type="checkbox" (change)="toggleSeasonY($event,i)" [checked]="_showSeasonY[i]"/>
+        </div>
+        <div fxFlex="40px">
+          <p class="my-chart-font">{{y.year}}</p>
+        </div>
+        <div fxFlex="100px" style="text-align: right;">
+          <p class="my-chart-font"
+            [ngStyle]="{'color': y.direction == 'UP' ? 'palegreen' : 'lightcoral'}">
+            {{y.value}}%
+          </p>
+        </div>
+      </div>
+      <div style="width: 100%;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="30px" class="my-chart-font"></div>
+        <div fxFlex="140px"
+          class="my-chart-font"
+          style="text-align: right;"
+          [ngStyle]="{'color': _scannerDataCountUp > _scannerDataCountDown ? 'palegreen' : 'lightcoral'}">
+          <b>{{_scannerDataTotalDisplay}}</b>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- 5-Year Seasonality Series -->
+      <div style="width: 100%;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="30px"><input (change)="toggleSeason5($event)" [checked]="_showSeason5" type="checkbox"/></div>
+        <div fxFlex="150px"><p class="my-chart-font">5-Year Seasonality <font color="#80DED0">&#x2587;</font></p></div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Seasonality Scanner -->
+      <div style="width: 100%;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="30px"><input type="checkbox"></div>
+        <div fxFlex="150px"><p class="my-chart-font">Seasonality Scan</p></div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Magenta Channel -->
+      <div style="width: 100%;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="30px"><input (change)="toggleMagentaChannel($event)" [checked]="_showMagentaChannel" type="checkbox"/></div>
+        <div fxFlex="150px"><p class="my-chart-font">Magenta Channel <font color="#FF00FF">&#x2587;</font></p></div>
+      </div>
+      <mat-divider></mat-divider>
+      <!-- Volume Series -->
+      <div style="width: 100%;" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex="30px"><input (change)="toggleVolume($event)" [checked]="_showVolume" type="checkbox"/></div>
+        <div fxFlex="150px"><p class="my-chart-font">Volume <font color="gray">&#x2587;</font></p></div>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-drawer>
+    <mat-drawer-content class="mat-drawer-content-widget">
+      <div id="chartdiv" style="height: 100%; display: block;" [hidden]="_showChartDiv"></div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+</div>
+

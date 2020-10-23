@@ -1,0 +1,97 @@
+<div id="chartDailyWrapper"
+     [ngClass]="_fullscreen ? 'fullView' : 'normalView'">
+
+  <div *ngIf="_showSpinner" id="spinnerWrap">
+    <div class="spinner">
+      <mat-progress-spinner
+        class="default-spinner"
+        mode="indeterminate"
+        [strokeWidth]="2"
+        [diameter]="192">
+      </mat-progress-spinner>
+    </div>
+  </div>
+
+  <mat-toolbar class="mat-toolbar-widget">
+    <button mat-button (click)="toggleSidebar()">&#9776;</button>
+    <span>Chart: </span>
+    <span>&nbsp;&nbsp;</span>
+    <span #chartLabel></span>
+    <span>&nbsp;&nbsp;</span>
+    <span #chartCursorData></span>
+  </mat-toolbar>
+
+  <mat-drawer-container class="mat-drawer-container-widget">
+    <mat-drawer mode="side" [opened]="_sidebarOpen" class="mat-drawer-widget">
+
+      <mat-form-field class="my-form-field">
+        <mat-select [(value)]="_chartType" (selectionChange)="chartTypeChanged()">
+          <mat-option value="Daily1">3 Months Daily Chart</mat-option>
+          <mat-option value="Daily2">1 Year Daily Chart</mat-option>
+          <mat-option value="Weekly1">3 Years Weekly Chart</mat-option>
+          <mat-option value="Monthly1">10 Years Monthly Chart</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div style="display: flex">
+        <div><mat-checkbox [checked]= "true" [class.mat-checkbox-disabled]="false" disabled>Condition:</mat-checkbox></div>
+        <div style="flex-grow: 1;"></div>
+        <div><font color="#0000FF"><b>{{_sidebar_condition}}</b></font>&nbsp;&nbsp;&nbsp;</div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div style="display: flex">
+        <div><mat-checkbox [checked]= "true" [class.mat-checkbox-disabled]="false" disabled>Trade Action:</mat-checkbox></div>
+        <div style="flex-grow: 1;"></div>
+        <div><font color="#0000FF"><b>{{_sidebar_tradeAction}}</b></font>&nbsp;&nbsp;&nbsp;</div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div style="display: flex">
+        <div><mat-checkbox [checked]= "true" [class.mat-checkbox-disabled]="false" disabled>EMA3/EMA8:</mat-checkbox></div>
+        <div style="flex-grow: 1;"></div>
+        <div><font color="#0000FF"><b>{{_sidebar_ema}}</b></font>&nbsp;&nbsp;&nbsp;</div>
+      </div>
+
+      <div style="display: flex">
+        <div><mat-checkbox [checked]= "true" [class.mat-checkbox-disabled]="false" disabled>MSI kp/d:</mat-checkbox></div>
+        <div style="flex-grow: 1;"></div>
+        <div><font color="#0000FF"><b>{{_sidebar_msi}}</b></font>&nbsp;&nbsp;&nbsp;</div>
+      </div>
+
+      <div style="display: flex">
+        <div><mat-checkbox [checked]= "true" [class.mat-checkbox-disabled]="false" disabled>CCI:</mat-checkbox></div>
+        <div style="flex-grow: 1;"></div>
+        <div><font color="#0000FF"><b>{{_sidebar_cci}}</b></font>&nbsp;&nbsp;&nbsp;</div>
+      </div>
+
+      <div style="display: flex">
+        <div><mat-checkbox [checked]= "true" [class.mat-checkbox-disabled]="false" disabled>RSI:</mat-checkbox></div>
+        <div style="flex-grow: 1;"></div>
+        <div><font color="#0000FF"><b>{{_sidebar_rsi}}</b></font>&nbsp;&nbsp;&nbsp;</div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <mat-checkbox [checked]= "_sidebar_toggleVolume" (change)="toggleChartVolume($event.checked)">Volume</mat-checkbox>
+
+      <mat-divider></mat-divider>
+
+      <mat-checkbox [checked]= "_sidebar_toggleMagentaChannel" (change)="toggleMagentaChannel($event.checked)">Magenta Channel</mat-checkbox>
+
+      <mat-divider></mat-divider>
+
+      <!-- <mat-checkbox [checked]="false" (change)="toggleFullscreen($event.checked)">Fullscreen</mat-checkbox> -->
+    </mat-drawer>
+
+    <mat-drawer-content class="mat-drawer-content-widget">
+      <div id="dailychart" style="height: 100%; display: block;"></div>
+    </mat-drawer-content>
+
+  </mat-drawer-container>
+
+</div>
+
+

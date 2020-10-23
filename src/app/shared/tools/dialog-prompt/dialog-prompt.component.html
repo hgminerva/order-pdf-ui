@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>
+    {{ dialogTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <br />
+    {{ dialogContent }}
+    <br /><br />
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button 
+            style="background-color: #7fba00; color: white;" 
+            [disabled]="isOkButtonDisabled"
+            (click)="buttonOkClick()" 
+            *ngIf="!dialogIsMessageOnly">
+        Ok
+    </button>
+    <button mat-stroked-button 
+            (click)="buttonCloseClick()" 
+            [disabled]="isCloseButtonDisabled">
+        Close
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,57 @@
+<div *ngIf="_showSpinner" id="spinnerWrap">
+  <div class="spinner">
+    <mat-progress-spinner
+      class="default-spinner"
+      mode="indeterminate"
+      [strokeWidth]="2"
+      [diameter]="192">
+    </mat-progress-spinner>
+  </div>
+</div>
+
+<mat-toolbar class="mat-toolbar-widget">
+  <div>
+    <mat-form-field floatLabel="never"
+      class="my-form-field"
+      style="margin-top: -1.25em; margin-bottom: -1.25em">
+      <mat-label>Type symbol here.</mat-label>
+      <input matInput
+        #inputSymbol
+        (keydown.enter)="updateStockChart($event)"
+        autocomplete="off"
+        autofocus
+        oninput="this.value = this.value.toUpperCase()">
+
+    </mat-form-field>
+  </div>
+  <div>
+    &nbsp;
+    <button mat-flat-button (click)="updateSymbolData()"
+            style="background-color: silver; color: black; border: 0px; padding-top: 5px; padding-bottom: 5px;">
+      Update and reload symbol
+    </button>
+  </div>
+  <div style="flex-grow: 1;"></div>
+  <div>
+    <button mat-flat-button
+            (click)="openScreener()"
+            style="background-color: #7fba00; color: black; border: 0px">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-tab-group [(selectedIndex)]="_tabIndex" (selectedTabChange)="tabChanged()" mat-align-tabs="start">
+  <mat-tab label="Price Chart" style="padding-top: 0px;">
+    <app-widget-chart-daily
+      [_input_data]="_chartDaily_data"
+      style="height: 100%; display: block;">
+    </app-widget-chart-daily>
+  </mat-tab>
+  <mat-tab label="Seasonality Chart" class="my-form-field">
+    <app-widget-chart-seasonality
+      [_input_data]="_chartSeasonality_data"
+      style="height: 100%;display: block;">
+    </app-widget-chart-seasonality>
+  </mat-tab>
+</mat-tab-group>

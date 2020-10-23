@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "right-side-invesments"
+  },
+  "targets": {
+    "right-side-invesments": {
+      "hosting": {
+        "magentatrader4": [
+          "right-side-invesments"
+        ]
+      }
+    }
+  }
+}

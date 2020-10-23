@@ -1,0 +1,38 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <button
+            *ngIf="isLoggedIn"
+            mat-icon-button
+            (click)="toggleSidebar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span><img style="vertical-align:middle; height:40px" src="../../../../assets/hirologo.png"></span>
+        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+            <ul fxLayout="row" fxLayoutGap="20px">
+                <li>
+                    <button mat-button routerLink="/">About</button>
+                </li>
+                <li>
+                    <button
+                        *ngIf="!isLoggedIn"
+                        mat-button
+                        routerLink="/login">
+                        Login
+                    </button>
+                </li>
+                <li>
+                    <button *ngIf="isLoggedIn" mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>person_outline</mat-icon>
+                        {{currentUsername}}
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button (click)="logout()" mat-menu-item>
+                            <mat-icon>exit_to_app</mat-icon>
+                            Logout
+                        </button>
+                    </mat-menu>
+                </li>
+            </ul>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,38 @@
+<div fxLayout="row" fxLayout.xs="column">
+    <div fxFlex="30" style="margin: 5px;"></div>
+    <div fxFlex="40" style="margin: 5px;">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                  Login
+                </mat-card-title>
+                <mat-card-subtitle>
+                  Please provide your username and password.
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form (ngSubmit)="login()">
+                    <div style="padding: 20px;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Username</mat-label>
+                            <input [(ngModel)]="loginModel.UserName" [ngModelOptions]="{standalone: true}" matInput
+                                #text_username maxlength="100" placeholder="Enter your username">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Password</mat-label>
+                            <input type="password" [(ngModel)]="loginModel.Password"
+                                [ngModelOptions]="{standalone: true}" matInput #text_password maxlength="100"
+                                placeholder="Enter your password">
+                        </mat-form-field>
+                        <br />
+                        <button type="submit" mat-flat-button id="buttonLogin" color="primary"
+                            style="width: 100%; padding-top: 10px; padding-bottom: 10px;">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxFlex="30" style="margin: 5px;"></div>
+</div>
