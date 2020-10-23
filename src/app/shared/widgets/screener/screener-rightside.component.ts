@@ -27,7 +27,9 @@ export class ScreenerRightsideComponent implements OnInit {
   public _dialogSourceComponent: string = "";
 
   public pcrDisplayedColumns: string[] = [
-    'button_search',
+    'button_edit',
+    'button_report',
+    'button_email',
     'order_number',
     'customer_name',
     'email',

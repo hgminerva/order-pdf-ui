@@ -76,25 +76,47 @@
         <div fxFlex="100" style="padding: 5px;">
             <mat-table [dataSource]="pcrDataSource" #pcrSort="matSort" matSort style="overflow-x: scroll;">
 
-                <ng-container matColumnDef="button_search">
-                    <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
-                    <mat-cell fxFlex="100px" *matCellDef="let row">
+                <ng-container matColumnDef="button_edit">
+                    <mat-header-cell fxFlex="70px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                    <mat-cell fxFlex="70px" *matCellDef="let row">
                         <button mat-mini-fab style="background-color: white;"
                             aria-label="Example icon button with a delete icon"
                             (click)="buttonOpenChart(row.Symbol)">
-                            <mat-icon>search</mat-icon>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="button_report">
+                    <mat-header-cell fxFlex="50px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                    <mat-cell fxFlex="50px" *matCellDef="let row">
+                        <button mat-mini-fab style="background-color: white;"
+                            aria-label="Example icon button with a delete icon"
+                            (click)="buttonOpenChart(row.Symbol)">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="button_email">
+                    <mat-header-cell fxFlex="50px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                    <mat-cell fxFlex="50px" *matCellDef="let row">
+                        <button mat-mini-fab style="background-color: white;"
+                            aria-label="Example icon button with a delete icon"
+                            (click)="buttonOpenChart(row.Symbol)">
+                            <mat-icon>email</mat-icon>
                         </button>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="order_number">
-                    <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> Order No. </mat-header-cell>
-                    <mat-cell fxFlex="100px" *matCellDef="let row"> {{row.order_number}} </mat-cell>
+                    <mat-header-cell fxFlex="50px" *matHeaderCellDef mat-sort-header> Order No. </mat-header-cell>
+                    <mat-cell fxFlex="50px" *matCellDef="let row"> {{row.order_number}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="customer_name">
-                    <mat-header-cell fxFlex="350px" *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-                    <mat-cell fxFlex="350px" *matCellDef="let row"> {{row.customer_name}} </mat-cell>
+                    <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                    <mat-cell fxFlex="250px" *matCellDef="let row"> {{row.customer_name}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="email">
